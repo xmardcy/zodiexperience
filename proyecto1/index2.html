@@ -1,0 +1,522 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zodixperience</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: white;
+            background: url('galaxy-3468.gif') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        #menu, .option {
+            display: none;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        color: white;
+        background: url('galaxy-3468.gif') no-repeat center center fixed;
+        background-size: cover;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        margin-top: 20px;
+    }
+    #Menú, .option {
+        display: none;
+    }
+    button {
+        padding: 10px;
+        font-size: 16px;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+    #famososResultado img {
+        width: 100px;
+        height: auto;
+        margin: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    }
+ </style>
+
+</head>
+<body>
+    <h1>Zodixperience</h1>
+    <p>Bienvenido a tu constelación personal. El universo te estaba esperando.</p>
+
+    <div id="welcome" class="container">
+        <label>¿Cómo te gustaría que te llame explorador?</label>
+        <input type="text" id="nombre">
+        <button onclick="iniciar()">Iniciar aventura</button>
+    </div>
+
+    <div id="menu" class="container">
+        
+        <h2>¡Hola, <span id="nombreDisplay"></span>! Selecciona una opción:</h2>
+        <button onclick="mostrarOpcion('opcion1')">1. Conoce tu signo zodiacal</button>
+        <button onclick="mostrarOpcion('opcion2')">2. Compatibilidad entre signos</button>
+        <button onclick="mostrarOpcion('opcion3')">3. Famosos que comparten tu signo</button>
+        <button onclick="mostrarOpcion('opcion4')">4. Minijuego de predicción del destino</button>
+    </div>
+
+    <div id="opcion1" class="option container"> 
+        <p>Introduce tu fecha de nacimiento:</p>
+        <input type="number" id="dia" placeholder="Día" min="1" max="31">
+        <input type="number" id="mes" placeholder="Mes" min="1" max="12">
+        <button onclick="conocerSigno()">Ver mi signo</button>
+        <p id="signoResultado"></p>
+        <button onclick="volverMenu()">Volver</button>
+    </div>
+
+    <div id="opcion2" class="option container">
+        <p>Selecciona dos signos para ver su compatibilidad:</p>
+        <input type="text" id="signo1" placeholder="Primer signo">
+        <input type="text" id="signo2" placeholder="Segundo signo">
+        <button onclick="calcularCompatibilidad()">Ver compatibilidad</button>
+        <p id="compatibilidadResultado"></p>
+        <button onclick="volverMenu()">Volver</button>
+    </div>
+
+    <!--<div id="opcion3" class="option container" style="display: none;">
+        <p>Introduce tu signo para ver famosos que comparten tu signo:</p>
+        <input type="text" id="signoFamoso" placeholder="Tu signo">
+        <button onclick="mostrarFamosos()">Ver famosos</button>
+        <p id="famososResultado">Lady Gaga, Robert Downey Jr., Emma Watson...</p>
+        <button onclick="volverMenu()">Volver</button>
+    </div>-->
+
+    <div id="opcion3" class="option container">
+        <p>Introduce tu signo para ver famosos que comparten tu signo:</p>
+        <input type="text" id="signoFamoso" placeholder="Ejemplo: aries, tauro, geminis...">
+        <button onclick="mostrarFamosos()">Ver famosos</button>
+        <div id="famososResultado"></div>
+        <button onclick="volverMenu()">Volver</button>
+    </div>
+
+
+    <div id="opcion4" class="option container">
+        <p>Te daremos una predicción personalizada basada en tu signo zodiacal.</p>
+        <div id="questions">
+            <label for="signo">Ingresa tu signo zodiacal:</label>
+            <input type="text" id="signo" placeholder="Ej: Aries, Tauro, etc." required>
+            <br><br>
+            <p>Pregunta 1: ¿Qué elemento prefieres para esta semana?</p>
+            <select id="respuesta1">
+                <option value="">Selecciona una opción</option>
+                <option value="1">Fuego</option>
+                <option value="2">Tierra</option>
+                <option value="3">Aire</option>
+                <option value="4">Agua</option>
+            </select>
+            <br><br>
+            <p>Pregunta 2: ¿Qué actividad te gustaría hacer más esta semana?</p>
+            <select id="respuesta2">
+                <option value="">Selecciona una opción</option>
+                <option value="1">Socializar con amigos</option>
+                <option value="2">Trabajar en tus proyectos</option>
+                <option value="3">Explorar un lugar nuevo</option>
+                <option value="4">Descansar y relajarte</option>
+            </select>
+            <br><br>
+            <p>Pregunta 3: ¿Qué virtud te gustaría fortalecer esta semana?</p>
+            <select id="respuesta3">
+                <option value="">Selecciona una opción</option>
+                <option value="1">Paciencia</option>
+                <option value="2">Valentía</option>
+                <option value="3">Creatividad</option>
+                <option value="4">Inteligencia</option>
+            </select>
+            <br><br>
+            <button onclick="generatePrediction()">Obtener mi predicción</button>
+        </div>
+        <div id="prediction" class="hidden">
+            <p id="resultado"></p>
+            <button onclick="restartGame()">Volver a jugar</button>
+            <button onclick="volverMenu()">Volver</button>
+        </div>
+    </div>
+
+    <script>
+        function generatePrediction() {
+            const signo = document.getElementById('signo').value.trim();
+            const respuesta1 = document.getElementById('respuesta1').value;
+            const respuesta2 = document.getElementById('respuesta2').value;
+            const respuesta3 = document.getElementById('respuesta3').value;
+
+            // Validar entradas
+            if (!signo || !respuesta1 || !respuesta2 || !respuesta3) {
+                alert('Por favor, responde todas las preguntas.');
+                return;
+            }
+
+            let prediccion = `Tu predicción para esta semana, ${signo}, es la siguiente: `;
+
+            // Respuesta según la elección del usuario
+            if (respuesta1 === "1") {
+                prediccion += "Tu semana estará llena de energía ardiente, perfecta para enfrentar retos. ";
+            } else if (respuesta1 === "2") {
+                prediccion += "Un tiempo de estabilidad y productividad se acerca, aprovéchalo al máximo. ";
+            } else if (respuesta1 === "3") {
+                prediccion += "Estarás lleno/a de ideas y sentirás la inspiración de nuevos comienzos. ";
+            } else if (respuesta1 === "4") {
+                prediccion += "Una calma profunda te acompañará, ayudándote a resolver cualquier problema. ";
+            }
+
+            if (respuesta2 === "1") {
+                prediccion += "Además, socializar te traerá grandes alegrías. ";
+            } else if (respuesta2 === "2") {
+                prediccion += "Tu esfuerzo en el trabajo te dará buenos frutos. ";
+            } else if (respuesta2 === "3") {
+                prediccion += "La aventura y la exploración están en el aire. ";
+            } else if (respuesta2 === "4") {
+                prediccion += "Disfruta de la paz y la tranquilidad que te rodea. ";
+            }
+
+            if (respuesta3 === "1") {
+                prediccion += "Recuerda ser paciente y todo caerá en su lugar.";
+            } else if (respuesta3 === "2") {
+                prediccion += "Tu valentía te llevará a superar cualquier obstáculo.";
+            } else if (respuesta3 === "3") {
+                prediccion += "Usa tu creatividad para convertir tus sueños en realidad.";
+            } else if (respuesta3 === "4") {
+                prediccion += "Confía en tu inteligencia para encontrar las respuestas que buscas.";
+            }
+
+            // Mostrar predicción
+            document.getElementById('questions').classList.add('hidden');
+            document.getElementById('prediction').classList.remove('hidden');
+            document.getElementById('resultado').innerText = prediccion;
+        }
+        function restartGame() {
+        document.getElementById('questions').classList.remove('hidden');
+        document.getElementById('prediction').classList.add('hidden');
+        document.getElementById('signo').value = "";
+        document.getElementById('respuesta1').value = "";
+        document.getElementById('respuesta2').value = "";
+        document.getElementById('respuesta3').value = "";
+    }
+    </script>
+    </div>
+
+    <script>
+        function iniciar() {
+            const nombre = document.getElementById('nombre').value;
+            document.getElementById('nombreDisplay').innerText = nombre;
+            document.getElementById('welcome').style.display = 'none';
+            document.getElementById('menu').style.display = 'block';
+        }
+
+        function mostrarOpcion(opcion) {
+            document.getElementById('menu').style.display = 'none';
+            document.querySelectorAll('.option').forEach(div => div.style.display = 'none');
+            document.getElementById(opcion).style.display = 'block';
+        }
+
+        function volverMenu() {
+            document.querySelectorAll('.option').forEach(div => div.style.display = 'none');
+            document.getElementById('menu').style.display = 'block';
+        }
+
+        function conocerSigno() {
+            const dia = parseInt(document.getElementById('dia').value);
+            const mes = parseInt(document.getElementById('mes').value);
+            let signo = "";
+
+            switch (mes) {
+                case 1: signo = dia >= 20 ? "Acuario" : "Capricornio"; break;
+                case 2: signo = dia >= 19 ? "Piscis" : "Acuario"; break;
+                case 3: signo = dia >= 21 ? "Aries" : "Piscis"; break;
+                case 4: signo = dia >= 20 ? "Tauro" : "Aries"; break;
+                case 5: signo = dia >= 21 ? "Géminis" : "Tauro"; break;
+                case 6: signo = dia >= 21 ? "Cáncer" : "Géminis"; break;
+                case 7: signo = dia >= 23 ? "Leo" : "Cáncer"; break;
+                case 8: signo = dia >= 23 ? "Virgo" : "Leo"; break;
+                case 9: signo = dia >= 23 ? "Libra" : "Virgo"; break;
+                case 10: signo = dia >= 23 ? "Escorpio" : "Libra"; break;
+                case 11: signo = dia >= 22 ? "Sagitario" : "Escorpio"; break;
+                case 12: signo = dia >= 22 ? "Capricornio" : "Sagitario"; break;
+            }
+            document.getElementById('signoResultado').innerText = `Tu signo zodiacal es: ${signo}`;
+        }
+
+        function calcularCompatibilidad() {
+            const signo1 = document.getElementById('signo1').value.toLowerCase();
+            const signo2 = document.getElementById('signo2').value.toLowerCase();
+            let compatibilidad = 0;
+
+            if (signo1 === "aries" && signo2 === "leo") compatibilidad = 90;
+            else if (signo1 === "aries" && signo2 === "tauro") compatibilidad = 60;
+            else if (signo1 === "aries" && signo2 === "aries") compatibilidad = 70;
+            else if (signo1 === "aries" && signo2 === "geminis") compatibilidad = 80;
+            else if (signo1 === "aries" && signo2 === "cancer") compatibilidad = 50;
+            else if (signo1 === "aries" && signo2 === "capricornio") compatibilidad = 60;
+            else if (signo1 === "aries" && signo2 === "virgo") compatibilidad = 60;
+            else if (signo1 === "aries" && signo2 === "libra") compatibilidad = 70;
+            else if (signo1 === "aries" && signo2 === "escorpio") compatibilidad = 55;
+            else if (signo1 === "aries" && signo2 === "sagitario") compatibilidad = 80;
+            else if (signo1 === "aries" && signo2 === "acuario") compatibilidad = 75;
+            else if (signo1 === "aries" && signo2 === "piscis") compatibilidad = 50;
+            else if (signo1 === "tauro" && signo2 === "tauro") compatibilidad = 70;
+            else if (signo1 === "tauro" && signo2 === "aries") compatibilidad = 60;
+            else if (signo1 === "tauro" && signo2 === "geminis") compatibilidad = 50;
+            else if (signo1 === "tauro" && signo2 === "cancer") compatibilidad = 80;
+            else if (signo1 === "tauro" && signo2 === "capricornio") compatibilidad = 85;
+            else if (signo1 === "tauro" && signo2 === "virgo") compatibilidad = 90;
+            else if (signo1 === "tauro" && signo2 === "libra") compatibilidad = 60;
+            else if (signo1 === "tauro" && signo2 === "escorpio") compatibilidad = 75;
+            else if (signo1 === "tauro" && signo2 === "sagitario") compatibilidad = 55;
+            else if (signo1 === "tauro" && signo2 === "acuario") compatibilidad = 60;
+            else if (signo1 === "tauro" && signo2 === "piscis") compatibilidad = 80;
+            else if (signo1 === "tauro" && signo2 === "leo") compatibilidad = 60;
+            else if (signo1 === "geminis" && signo2 === "tauro") compatibilidad = 50;
+            else if (signo1 === "geminis" && signo2 === "aries") compatibilidad = 80;
+            else if (signo1 === "geminis" && signo2 === "geminis") compatibilidad = 70;
+            else if (signo1 === "geminis" && signo2 === "cancer") compatibilidad = 50;
+            else if (signo1 === "geminis" && signo2 === "capricornio") compatibilidad = 60;
+            else if (signo1 === "geminis" && signo2 === "virgo") compatibilidad = 60;
+            else if (signo1 === "geminis" && signo2 === "libra") compatibilidad = 90;
+            else if (signo1 === "geminis" && signo2 === "escorpio") compatibilidad = 50;
+            else if (signo1 === "geminis" && signo2 === "sagitario") compatibilidad = 85;
+            else if (signo1 === "geminis" && signo2 === "acuario") compatibilidad = 85;
+            else if (signo1 === "geminis" && signo2 === "piscis") compatibilidad = 60;
+            else if (signo1 === "geminis" && signo2 === "leo") compatibilidad = 70;
+            else if (signo1 === "cancer" && signo2 === "tauro") compatibilidad = 80;
+            else if (signo1 === "cancer" && signo2 === "aries") compatibilidad = 50;
+            else if (signo1 === "cancer" && signo2 === "geminis") compatibilidad = 50;
+            else if (signo1 === "cancer" && signo2 === "cancer") compatibilidad = 70;
+            else if (signo1 === "cancer" && signo2 === "capricornio") compatibilidad = 85;
+            else if (signo1 === "cancer" && signo2 === "virgo") compatibilidad = 80;
+            else if (signo1 === "cancer" && signo2 === "libra") compatibilidad = 50;
+            else if (signo1 === "cancer" && signo2 === "escorpio") compatibilidad = 90;
+            else if (signo1 === "cancer" && signo2 === "sagitario") compatibilidad = 50;
+            else if (signo1 === "cancer" && signo2 === "acuario") compatibilidad = 55;
+            else if (signo1 === "cancer" && signo2 === "piscis") compatibilidad = 85;
+            else if (signo1 === "cancer" && signo2 === "leo") compatibilidad = 60;
+            else if (signo1 === "leo" && signo2 === "tauro") compatibilidad = 60;
+            else if (signo1 === "leo" && signo2 === "aries") compatibilidad = 90;
+            else if (signo1 === "leo" && signo2 === "geminis") compatibilidad = 70;
+            else if (signo1 === "leo" && signo2 === "cancer") compatibilidad = 60;
+            else if (signo1 === "leo" && signo2 === "capricornio") compatibilidad = 55;
+            else if (signo1 === "leo" && signo2 === "virgo") compatibilidad = 60;
+            else if (signo1 === "leo" && signo2 === "libra") compatibilidad = 80;
+            else if (signo1 === "leo" && signo2 === "escorpio") compatibilidad = 60;
+            else if (signo1 === "leo" && signo2 === "sagitario") compatibilidad = 85;
+            else if (signo1 === "leo" && signo2 === "acuario") compatibilidad = 75;
+            else if (signo1 === "leo" && signo2 === "piscis") compatibilidad = 55;
+            else if (signo1 === "leo" && signo2 === "leo") compatibilidad = 70;
+            else if (signo1 === "virgo" && signo2 === "tauro") compatibilidad = 90;
+            else if (signo1 === "virgo" && signo2 === "aries") compatibilidad = 60;
+            else if (signo1 === "virgo" && signo2 === "geminis") compatibilidad = 60;
+            else if (signo1 === "virgo" && signo2 === "cancer") compatibilidad = 80;
+            else if (signo1 === "virgo" && signo2 === "capricornio") compatibilidad = 85;
+            else if (signo1 === "virgo" && signo2 === "virgo") compatibilidad = 70;
+            else if (signo1 === "virgo" && signo2 === "libra") compatibilidad = 60;
+            else if (signo1 === "virgo" && signo2 === "escorpio") compatibilidad = 80;
+            else if (signo1 === "virgo" && signo2 === "sagitario") compatibilidad = 50;
+            else if (signo1 === "virgo" && signo2 === "acuario") compatibilidad = 65;
+            else if (signo1 === "virgo" && signo2 === "piscis") compatibilidad = 75;
+            else if (signo1 === "virgo" && signo2 === "leo") compatibilidad = 60;
+            else if (signo1 === "libra" && signo2 === "tauro") compatibilidad = 60;
+            else if (signo1 === "libra" && signo2 === "aries") compatibilidad = 70;
+            else if (signo1 === "libra" && signo2 === "geminis") compatibilidad = 90;
+            else if (signo1 === "libra" && signo2 === "cancer") compatibilidad = 50;
+            else if (signo1 === "libra" && signo2 === "capricornio") compatibilidad = 55;
+            else if (signo1 === "libra" && signo2 === "virgo") compatibilidad = 60;
+            else if (signo1 === "libra" && signo2 === "libra") compatibilidad = 70;
+            else if (signo1 === "libra" && signo2 === "escorpio") compatibilidad = 60;
+            else if (signo1 === "libra" && signo2 === "sagitario") compatibilidad = 70;
+            else if (signo1 === "libra" && signo2 === "acuario") compatibilidad = 85;
+            else if (signo1 === "libra" && signo2 === "piscis") compatibilidad = 55;
+            else if (signo1 === "libra" && signo2 === "leo") compatibilidad = 80;
+            else if (signo1 === "escorpio" && signo2 === "tauro") compatibilidad = 75;
+            else if (signo1 === "escorpio" && signo2 === "aries") compatibilidad = 50;
+            else if (signo1 === "escorpio" && signo2 === "geminis") compatibilidad = 50;
+            else if (signo1 === "escorpio" && signo2 === "cancer") compatibilidad = 90;
+            else if (signo1 === "escorpio" && signo2 === "capricornio") compatibilidad = 85;
+            else if (signo1 === "escorpio" && signo2 === "virgo") compatibilidad = 80;
+            else if (signo1 === "escorpio" && signo2 === "libra") compatibilidad = 60;
+            else if (signo1 === "escorpio" && signo2 === "escorpio") compatibilidad = 70;
+            else if (signo1 === "escorpio" && signo2 === "sagitario") compatibilidad = 55;
+            else if (signo1 === "escorpio" && signo2 === "acuario") compatibilidad = 60;
+            else if (signo1 === "escorpio" && signo2 === "piscis") compatibilidad = 85;
+            else if (signo1 === "escorpio" && signo2 === "leo") compatibilidad = 60;
+            else if (signo1 === "sagitario" && signo2 === "tauro") compatibilidad = 55;
+            else if (signo1 === "sagitario" && signo2 === "aries") compatibilidad = 85;
+            else if (signo1 === "sagitario" && signo2 === "geminis") compatibilidad = 85;
+            else if (signo1 === "sagitario" && signo2 === "cancer") compatibilidad = 50;
+            else if (signo1 === "sagitario" && signo2 === "capricornio") compatibilidad = 60;
+            else if (signo1 === "sagitario" && signo2 === "virgo") compatibilidad = 50;
+            else if (signo1 === "sagitario" && signo2 === "libra") compatibilidad = 70;
+            else if (signo1 === "sagitario" && signo2 === "escorpio") compatibilidad = 55;
+            else if (signo1 === "sagitario" && signo2 === "sagitario") compatibilidad = 70;
+            else if (signo1 === "sagitario" && signo2 === "acuario") compatibilidad = 80;
+            else if (signo1 === "sagitario" && signo2 === "piscis") compatibilidad = 60;
+            else if (signo1 === "sagitario" && signo2 === "leo") compatibilidad = 85;
+            else if (signo1 === "capricornio" && signo2 === "tauro") compatibilidad = 85;
+            else if (signo1 === "capricornio" && signo2 === "aries") compatibilidad = 55;
+            else if (signo1 === "capricornio" && signo2 === "geminis") compatibilidad = 60;
+            else if (signo1 === "capricornio" && signo2 === "cancer") compatibilidad = 85;
+            else if (signo1 === "capricornio" && signo2 === "capricornio") compatibilidad = 70;
+            else if (signo1 === "capricornio" && signo2 === "virgo") compatibilidad = 85;
+            else if (signo1 === "capricornio" && signo2 === "libra") compatibilidad = 55;
+            else if (signo1 === "capricornio" && signo2 === "escorpio") compatibilidad = 85;
+            else if (signo1 === "capricornio" && signo2 === "sagitario") compatibilidad = 60;
+            else if (signo1 === "capricornio" && signo2 === "acuario") compatibilidad = 60;
+            else if (signo1 === "caprpicornio" && signo2 === "piscis") compatibilidad = 80;
+            else if (signo1 === "capricornio" && signo2 === "leo") compatibilidad = 55;
+            else if (signo1 === "acuario" && signo2 === "tauro") compatibilidad = 60;
+            else if (signo1 === "acuario" && signo2 === "aries") compatibilidad = 75;
+            else if (signo1 === "acuario" && signo2 === "geminis") compatibilidad = 85;
+            else if (signo1 === "acuario" && signo2 === "cancer") compatibilidad = 55;
+            else if (signo1 === "acuario" && signo2 === "capricornio") compatibilidad = 60;
+            else if (signo1 === "acuario" && signo2 === "virgo") compatibilidad = 65;
+            else if (signo1 === "acuario" && signo2 === "libra") compatibilidad = 85;
+            else if (signo1 === "acuario" && signo2 === "escorpio") compatibilidad = 60;
+            else if (signo1 === "acuario" && signo2 === "sagitario") compatibilidad = 80;
+            else if (signo1 === "acuario" && signo2 === "acuario") compatibilidad = 70;
+            else if (signo1 === "acuario" && signo2 === "piscis") compatibilidad = 55;
+            else if (signo1 === "acuario" && signo2 === "leo") compatibilidad = 75;
+            else if (signo1 === "piscis" && signo2 === "tauro") compatibilidad = 80;
+            else if (signo1 === "piscis" && signo2 === "aries") compatibilidad = 50;
+            else if (signo1 === "piscis" && signo2 === "geminis") compatibilidad = 60;
+            else if (signo1 === "piscis" && signo2 === "cancer") compatibilidad = 85;
+            else if (signo1 === "piscis" && signo2 === "capricornio") compatibilidad = 80;
+            else if (signo1 === "piscis" && signo2 === "virgo") compatibilidad = 75;
+            else if (signo1 === "piscis" && signo2 === "libra") compatibilidad = 55;
+            else if (signo1 === "piscis" && signo2 === "escorpio") compatibilidad = 85;
+            else if (signo1 === "piscis" && signo2 === "sagitario") compatibilidad = 60;
+            else if (signo1 === "piscis" && signo2 === "acuario") compatibilidad = 55;
+            else if (signo1 === "piscis" && signo2 === "piscis") compatibilidad = 70;
+            else if (signo1 === "piscis" && signo2 === "leo") compatibilidad = 55;
+            else compatibilidad = -1; // Valor de ejemplo
+            document.getElementById('compatibilidadResultado').innerText = `Compatibilidad: ${compatibilidad}%`;
+        }
+
+
+
+
+
+
+        function mostrarOpcion3() {
+            document.getElementById('menu').style.display = 'none';
+            document.getElementById('opcion1').style.display = 'block';
+        }
+
+        function volverMenu() {
+            document.getElementById('opcion1').style.display = 'none';
+            document.getElementById('opcion2').style.display = 'none';
+            document.getElementById('opcion3').style.display = 'none';
+            document.getElementById('opcion4').style.display = 'none';
+            document.getElementById('menu').style.display = 'block';
+        }
+
+        function mostrarFamosos() {
+            const signo = document.getElementById('signoFamoso').value.trim().toLowerCase();
+            const famosos = {
+                aries: {
+                    nombres: "Lady Gaga, Robert Downey Jr., Emma Watson...",
+                    imagenes: ["Lady_Gaga.jpg", "robertjr.jpg", "emmawatson.jpg"]
+                },
+                tauro: {
+                    nombres: "Adele, Dwayne Johnson, George Clooney...",
+                    imagenes: ["Adele.jpg", "Dwayne_Johnson.jpg", "George_Clooney.jpg"]
+                },
+                geminis: {
+                    nombres: "Johnny Depp, Angelina Jolie, Kanye West...",
+                    imagenes: ["Johnny_Depp.jpg", "Angelina_Jolie.jpg", "Kanye_West.jpg"]
+                },
+                cancer: {
+                    nombres: "Selena Gomez, Tom Cruise, Ariana Grande...",
+                    imagenes: ["Selena_Gomez.jpg", "Tom_Cruise.jpg", "Ariana_Grande.jpg"]
+                },
+                leo: {
+                    nombres: "Jennifer Lawrence, Madonna, Sandra Bullock...",
+                    imagenes: ["Jennifer_Lawrence.jpg", "Madonna.jpg", "Sandra_Bullock.jpg"]
+                },
+                virgo: {
+                    nombres: "Beyoncé, Keanu Reeves, Zendaya...",
+                    imagenes: ["Beyonce.jpg", "Keanu_Reeves.jpg", "Zendaya.jpg"]
+                },
+                libra: {
+                    nombres: "Will Smith, Kim Kardashian, Cardi B...",
+                    imagenes: ["Will_Smith.jpg", "Kim_Kardashian.jpg", "Cardi_B.jpg"]
+                },
+                escorpio: {
+                    nombres: "Leonardo DiCaprio, Drake, Julia Roberts...",
+                    imagenes: ["Leonardo_DiCaprio.jpg", "Drake.jpg", "Julia_Roberts.jpg"]
+                },
+                sagitario: {
+                    nombres: "Taylor Swift, Brad Pitt, Britney Spears...",
+                    imagenes: ["Taylor_Swift.jpg", "Brad_Pitt.jpg", "Britney_Spears.jpg"]
+                },
+                capricornio: {
+                    nombres: "Michelle Obama, Bradley Cooper, Kate Middleton...",
+                    imagenes: ["Michelle_Obama.jpg", "Bradley_Cooper.jpg", "Kate_Middleton.jpg"]
+                },
+                acuario: {
+                    nombres: "Shakira, Oprah Winfrey, Cristiano Ronaldo...",
+                    imagenes: ["Shakira.jpg", "Oprah_Winfrey.jpg", "Cristiano_Ronaldo.jpg"]
+                },
+                piscis: {
+                    nombres: "Rihanna, Drew Barrymore, Justin Bieber...",
+                    imagenes: ["Rihanna.jpg", "Drew_Barrymore.jpg", "Justin_Bieber.jpg"]
+                }
+            };
+
+            const resultado = famosos[signo];
+            const resultadoDiv = document.getElementById('famososResultado');
+            resultadoDiv.innerHTML = ""; // Limpia el contenido previo
+
+            if (resultado) {
+                // Muestra nombres
+                const nombres = document.createElement("p");
+                nombres.innerText = resultado.nombres;
+                resultadoDiv.appendChild(nombres);
+
+                // Muestra imágenes
+                resultado.imagenes.forEach(imagen => {
+                    const img = document.createElement("img");
+                    img.src = `imagenes/${imagen}`; // Asegúrate de que las imágenes estén en la carpeta "imagenes"
+                    img.alt = imagen.split('.')[0]; // Usa el nombre del archivo como texto alternativo
+                    resultadoDiv.appendChild(img);
+                });
+            } else {
+                resultadoDiv.innerText = "Signo no encontrado.";
+            }
+        }
+
+
+
+
+
+        
+        function mostrarPrediccion() {
+            const elemento = document.getElementById('elemento').value;
+            const actividad = document.getElementById('actividad').value;
+            const virtud = document.getElementById('virtud').value;
+
+            const prediccion = `Elemento: ${elemento}, Actividad: ${actividad}, Virtud: ${virtud}`;
+            document.getElementById('prediccionResultado').innerText = prediccion;
+        }
+    </script>
+
+
+</body></html>
